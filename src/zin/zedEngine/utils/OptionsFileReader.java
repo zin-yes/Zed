@@ -11,23 +11,6 @@ import java.util.Map;
  */
 public class OptionsFileReader {
 
-	public static Map<String, String> readOptionsFile(String fileName) {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(Class.class.getResourceAsStream(fileName)));
-
-		Map<String, String> values = new HashMap<>();
-		
-		try {
-			String line = reader.readLine();
-			while (line != null) {
-				String[] pointersAndValues = line.split(": ");
-				values.put(pointersAndValues[0], pointersAndValues[1]);
-				line = reader.readLine();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return values;
-	}
+	
 
 }
