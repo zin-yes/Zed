@@ -37,7 +37,7 @@ public class Display {
 	}
 
 	public Display(String fileName) {
-		Map<String, String> options = Game.readOptionsFile("/" + fileName + ".zof");
+		Map<String, String> options = Game.readOptionsFile(fileName);
 		this.width = Integer.valueOf(options.get("width"));
 		this.height = Integer.valueOf(options.get("height"));
 		this.title = options.get("title").toString();

@@ -14,12 +14,13 @@ public abstract class Game {
 	public abstract void stopGame();
 
 	public abstract boolean shouldClose();
-	
+
 	public static Map<String, String> readOptionsFile(String fileName) {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(Class.class.getResourceAsStream(fileName)));
+		BufferedReader reader = new BufferedReader(
+				new InputStreamReader(Class.class.getResourceAsStream("/configs/" + fileName + ".zof")));
 
 		Map<String, String> values = new HashMap<>();
-		
+
 		try {
 			String line = reader.readLine();
 			while (line != null) {
