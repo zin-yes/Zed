@@ -2,7 +2,11 @@ package zin.zedEngine.graphics;
 
 import static org.lwjgl.glfw.GLFW.*;
 
+import java.util.Map;
+
 import org.lwjgl.opengl.GL;
+
+import zin.zedEngine.utils.OptionsFileReader;
 
 public class Display {
 
@@ -17,6 +21,15 @@ public class Display {
 		this.title = title;
 		this.state = state;
 		this.samples = samples;
+	}
+	
+	public Display(String fileName) {
+		Map<String, String> options = OptionsFileReader.readOptionsFile(fileName);
+		this.width = Integer.valueOf(options.get("width"));
+		this.height = Integer.valueOf(options.get("height"));
+		this.title = options.get("title").toString();
+		this.state = Integer.valueOf(options.get("state").toString());
+		this.samples = Integer.valueOf(options.get("samples"));
 	}
 
 	public void createDisplay() {

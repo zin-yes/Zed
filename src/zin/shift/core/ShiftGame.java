@@ -2,6 +2,7 @@ package zin.shift.core;
 
 import zin.zedEngine.game.Game;
 import zin.zedEngine.graphics.Display;
+import zin.zedEngine.utils.OptionsFileReader;
 
 public class ShiftGame extends Game {
 
@@ -15,7 +16,7 @@ public class ShiftGame extends Game {
 
 	@Override
 	public void startGame() {
-		display = new Display(WIDTH, HEIGHT, TITLE, STATE, SAMPLES);
+		display = new Display("/display_settings.zof");
 		display.createDisplay();
 	}
 
