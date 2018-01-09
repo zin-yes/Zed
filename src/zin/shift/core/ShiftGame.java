@@ -16,21 +16,22 @@ public class ShiftGame extends Game {
 	@Override
 	public void startGame() {
 		display = new Display(WIDTH, HEIGHT, TITLE, STATE, SAMPLES);
+		display.createDisplay();
 	}
 
 	@Override
 	public void updateGame() {
-
+		display.updateDisplay();
 	}
 
 	@Override
 	public void stopGame() {
-
+		display.destroyDisplay();
 	}
 
 	@Override
 	public boolean shouldClose() {
-		return false;
+		return display.shouldClose();
 	}
 
 }
