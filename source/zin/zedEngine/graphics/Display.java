@@ -41,7 +41,7 @@ public class Display {
 		this.width = Integer.valueOf(options.get("width"));
 		this.height = Integer.valueOf(options.get("height"));
 		this.title = options.get("title").toString();
-		this.state = Integer.valueOf(options.get("state").toString());
+		this.state = Integer.valueOf(options.get("state"));
 		this.samples = Integer.valueOf(options.get("samples"));
 	}
 
