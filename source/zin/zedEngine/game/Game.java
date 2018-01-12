@@ -24,6 +24,8 @@ public abstract class Game {
 		try {
 			String line = reader.readLine();
 			while (line != null) {
+				if(line.startsWith("#break"))
+					break;
 				String[] pointersAndValues = line.split(": ");
 				values.put(pointersAndValues[0], pointersAndValues[1]);
 				line = reader.readLine();

@@ -137,50 +137,54 @@ public class Vector3f {
 	public void setZ(float z) {
 		this.z = z;
 	}
-	
+
 	public Vector3f setVector(float x, float y, float z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		return this;
 	}
-	
+
 	public Vector3f setVector(Vector3f source) {
 		x = source.x;
 		y = source.y;
 		z = source.z;
 		return this;
 	}
-	
+
 	public Vector3f setVector(float xyz) {
 		x = xyz;
 		y = xyz;
 		z = xyz;
 		return this;
 	}
-	
-	public Vector2f getXY() {
+
+	public Vector2f xy() {
 		return new Vector2f(x, y);
 	}
-	
-	public Vector2f getXZ() {
+
+	public Vector2f xz() {
 		return new Vector2f(x, z);
 	}
-	
-	public Vector2f getYX() {
+
+	public Vector2f yx() {
 		return new Vector2f(y, x);
 	}
-	
-	public Vector2f getYZ() {
+
+	public Vector2f yz() {
 		return new Vector2f(y, z);
 	}
-	
-	public Vector2f getZX() {
+
+	public Vector2f zx() {
 		return new Vector2f(z, x);
 	}
-	
-	public Vector2f getZY() {
+
+	public Vector2f zy() {
 		return new Vector2f(z, y);
+	}
+
+	public String toString() {
+		return "Vector3f(" + x + ", " + y + ", " + z + ")";
 	}
 
 }

@@ -11,5 +11,13 @@ public class Texture {
 	public int getTextureID() {
 		return textureID;
 	}
+
+	public void bindTexture() {
+		
+	}
+
+	public void unbindTexture() {
+		
+	}
 	
 }

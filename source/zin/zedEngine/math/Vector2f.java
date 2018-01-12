@@ -14,6 +14,11 @@ public class Vector2f {
 		y = source.y;
 	}
 
+	public Vector2f(float amount) {
+		x = amount;
+		y = amount;
+	}
+
 	public Vector2f() {
 		x = 0;
 		y = 0;
@@ -112,6 +117,10 @@ public class Vector2f {
 
 	public void setY(float y) {
 		this.y = y;
+	}
+
+	public String toString() {
+		return "Vector3f(" + x + ", " + y + ")";
 	}
 
 }
