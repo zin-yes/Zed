@@ -7,6 +7,7 @@ import zin.zedEngine.graphics.Display;
 import zin.zedEngine.graphics.Entity;
 import zin.zedEngine.graphics.Material;
 import zin.zedEngine.graphics.Model;
+import zin.zedEngine.graphics.Texture;
 import zin.zedEngine.math.Vector3f;
 
 public class ShiftGame extends Game {
@@ -20,8 +21,9 @@ public class ShiftGame extends Game {
 		display = new Display("display_settings");
 		display.createDisplay();
 		float[] vertices = new float[] { -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f };
-		entity = new Entity(new Model(vertices), new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), new Vector3f(1, 1, 1));
-		entityMaterial = new Material(new RandomShader(), null);
+		float[] textureCoords = new float[] { 0, 0, 0, 1, 1, 1, 1, 0 };
+		entity = new Entity(new Model(vertices, textureCoords), new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), new Vector3f(1, 1, 1));
+		entityMaterial = new Material(new RandomShader(), new Texture("texture"));
 	}
 
 	@Override

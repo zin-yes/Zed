@@ -2,7 +2,6 @@ package zin.zedEngine.core;
 
 import zin.shift.core.ShiftGame;
 import zin.zedEngine.game.Game;
-import zin.zedEngine.math.Vector3f;
 
 public class Main {
 

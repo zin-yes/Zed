@@ -1,7 +1,6 @@
 package zin.zedEngine.graphics;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
@@ -55,8 +54,10 @@ public class Entity {
 		material.bindMaterial();
 		GL30.glBindVertexArray(model.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
+		GL20.glEnableVertexAttribArray(1);
 		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, model.getVertexCount());
 		GL20.glDisableVertexAttribArray(0);
+		GL20.glDisableVertexAttribArray(1);
 		GL30.glBindVertexArray(0);
 		material.unbindMaterial();
 	}

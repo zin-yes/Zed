@@ -1,5 +1,7 @@
 package zin.zedEngine.graphics;
 
+import org.lwjgl.opengl.GL13;
+
 public class Material {
 
 	// TODO: Add shader and reflectivity and damping etc..
@@ -16,12 +18,12 @@ public class Material {
 	}
 
 	public void bindMaterial() {
-//		texture.bindTexture();
+		texture.bindTexture(GL13.GL_TEXTURE0);
 		shader.bindShader();
 	}
 
 	public void unbindMaterial() {
-//		texture.unbindTexture();
+		texture.unbindTexture();
 		shader.unbindShader();
 	}
 	
