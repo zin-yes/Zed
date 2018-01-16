@@ -187,4 +187,8 @@ public class Vector3f {
 		return "Vector3f(" + x + ", " + y + ", " + z + ")";
 	}
 
+	public float length() {
+		return (float) Math.sqrt(x * x + y * y + z * z);
+	}
+
 }

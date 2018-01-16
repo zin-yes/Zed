@@ -1,6 +1,6 @@
 package zin.zedEngine.graphics;
 
-import static org.lwjgl.glfw.GLFW.GLFW_DECORATED;
+import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
 import static org.lwjgl.glfw.GLFW.GLFW_SAMPLES;
 import static org.lwjgl.glfw.GLFW.GLFW_VERSION_MAJOR;
@@ -15,8 +15,10 @@ import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
+import java.nio.DoubleBuffer;
 import java.util.Map;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL;
 
 import zin.zedEngine.game.Game;
@@ -27,6 +29,9 @@ public class Display {
 
 	private int width, height, samples, state;
 	private String title;
+
+	private double newX, newY, prevX, prevY, dx, dy;
+	private boolean rotX, rotY;
 
 	public Display(int width, int height, String title, int state, int samples) {
 		this.width = width;
@@ -64,9 +69,48 @@ public class Display {
 
 		glfwMakeContextCurrent(identifier);
 		GL.createCapabilities();
+
+		newX = width / 2;
+		newY = height / 2;
+
+		prevX = 0;
+		prevY = 0;
+
+		rotX = false;
+		rotY = false;
+
+		glfwSetInputMode(identifier, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	}
 
 	public void updateDisplay() {
+		DoubleBuffer x = BufferUtils.createDoubleBuffer(1);
+		DoubleBuffer y = BufferUtils.createDoubleBuffer(1);
+
+		glfwGetCursorPos(identifier, x, y);
+		x.rewind();
+		y.rewind();
+
+		newX = x.get();
+		newY = y.get();
+
+		double deltaX = newX - width / 2;
+		double deltaY = newY - height / 2;
+
+		rotX = newX != prevX;
+		rotY = newY != prevY;
+
+		if (rotX) {
+			dx = deltaX;
+		}
+		if (rotY) {
+			dy = deltaY;
+		}
+
+		prevX = newX;
+		prevY = newY;
+
+		glfwSetCursorPos(identifier, width / 2, height / 2);
+
 		glfwPollEvents();
 		glfwSwapBuffers(identifier);
 	}
@@ -77,6 +121,18 @@ public class Display {
 
 	public boolean shouldClose() {
 		return glfwWindowShouldClose(identifier);
+	}
+
+	public long getIdentifier() {
+		return identifier;
+	}
+
+	public double getDX() {
+		return dx;
+	}
+
+	public double getDY() {
+		return dy;
 	}
 
 }

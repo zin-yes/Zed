@@ -10,6 +10,7 @@ import java.util.Map;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
+import zin.zedEngine.math.Matrix4f;
 import zin.zedEngine.math.Vector2f;
 import zin.zedEngine.math.Vector3f;
 
@@ -85,6 +86,10 @@ public abstract class Shader {
 
 	protected void setUniform(String name, Vector3f value) {
 		GL20.glUniform3f(uniforms.get(name), value.x, value.y, value.z);
+	}
+
+	protected void setUniform(String name, Matrix4f value) {
+		GL20.glUniformMatrix4fv(uniforms.get(name), true, value.getMatrixBuffer());
 	}
 
 	protected void setUniform(String name, float value) {
