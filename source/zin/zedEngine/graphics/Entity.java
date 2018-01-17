@@ -66,7 +66,7 @@ public class Entity {
 		return position.multiply(rotation).multiply(scale);
 	}
 
-	public void render(Material material, Camera camera) {
+	public void render(Material material, Camera camera, Light light) {
 		material.bindMaterial();
 		GL30.glBindVertexArray(model.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
@@ -74,6 +74,7 @@ public class Entity {
 		GL20.glEnableVertexAttribArray(2);
 		material.setTransformation(getTransform());
 		material.setCamera(camera.getTransform());
+		material.setSunLight(light);
 		GL11.glDrawElements(GL11.GL_TRIANGLES, model.getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 		GL20.glDisableVertexAttribArray(0);
 		GL20.glDisableVertexAttribArray(1);

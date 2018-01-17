@@ -28,7 +28,11 @@ public class Camera {
 			strafeRight(0.2f);
 		if (GLFW.glfwGetKey(display.getIdentifier(), GLFW.GLFW_KEY_D) == GLFW.GLFW_TRUE)
 			strafeLeft(0.2f);
-
+		if(GLFW.glfwGetKey(display.getIdentifier(), GLFW.GLFW_KEY_SPACE) == GLFW.GLFW_TRUE)
+			position.y += 0.2f;
+		if(GLFW.glfwGetKey(display.getIdentifier(), GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_TRUE)
+			position.y -= 0.2f;
+				
 		rotation.x -= display.getDY() * 0.2f;
 		rotation.y += display.getDX() * 0.2f;
 
@@ -47,23 +51,23 @@ public class Camera {
 	}
 
 	public void walkForward(float distance) {
-		position.x -= distance * (float) Math.sin(Math.toRadians(rotation.y));
-		position.z -= distance * (float) Math.cos(Math.toRadians(rotation.y));
-	}
-
-	public void walkBackwards(float distance) {
 		position.x += distance * (float) Math.sin(Math.toRadians(rotation.y));
 		position.z += distance * (float) Math.cos(Math.toRadians(rotation.y));
 	}
 
+	public void walkBackwards(float distance) {
+		position.x -= distance * (float) Math.sin(Math.toRadians(rotation.y));
+		position.z -= distance * (float) Math.cos(Math.toRadians(rotation.y));
+	}
+
 	public void strafeLeft(float distance) {
-		position.x += distance * (float) Math.sin(Math.toRadians(rotation.y - 90));
-		position.z += distance * (float) Math.cos(Math.toRadians(rotation.y - 90));
+		position.x += distance * (float) Math.sin(Math.toRadians(rotation.y + 90));
+		position.z += distance * (float) Math.cos(Math.toRadians(rotation.y + 90));
 	}
 
 	public void strafeRight(float distance) {
-		position.x += distance * (float) Math.sin(Math.toRadians(rotation.y + 90));
-		position.z += distance * (float) Math.cos(Math.toRadians(rotation.y + 90));
+		position.x += distance * (float) Math.sin(Math.toRadians(rotation.y - 90));
+		position.z += distance * (float) Math.cos(Math.toRadians(rotation.y - 90));
 	}
 
 	public Vector3f getPosition() {
@@ -75,7 +79,7 @@ public class Camera {
 	}
 
 	public Matrix4f getTransform() {
-		Matrix4f position = new Matrix4f().translate(this.position);
+		Matrix4f position = new Matrix4f().translate(new Vector3f(this.position).negate());
 		Matrix4f rotation = new Matrix4f().rotate(this.rotation);
 
 		return rotation.multiply(position);

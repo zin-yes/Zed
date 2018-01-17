@@ -15,6 +15,12 @@ public class Vector3f {
 		y = source.y;
 		z = source.z;
 	}
+	
+	public Vector3f(float xyz) {
+		x = xyz;
+		y = xyz;
+		z = xyz;
+	}
 
 	public Vector3f() {
 		x = 0;
@@ -189,6 +195,13 @@ public class Vector3f {
 
 	public float length() {
 		return (float) Math.sqrt(x * x + y * y + z * z);
+	}
+
+	public Vector3f negate() {
+		x = -x;
+		y = -y;
+		z = -z;
+		return this;
 	}
 
 }

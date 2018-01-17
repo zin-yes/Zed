@@ -2,7 +2,7 @@ package zin.zedEngine.graphics;
 
 import org.lwjgl.opengl.GL13;
 
-import zin.shift.core.PhongShader;
+import zin.game.core.PhongShader;
 import zin.zedEngine.math.Matrix4f;
 
 public class Material {
@@ -36,6 +36,10 @@ public class Material {
 
 	public void setCamera(Matrix4f transform) {
 		shader.setViewMatrix(transform);
+	}
+
+	public void setSunLight(Light light) {
+		shader.setSunLight(light);
 	}
 	
 }

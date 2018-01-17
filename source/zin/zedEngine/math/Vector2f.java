@@ -13,10 +13,10 @@ public class Vector2f {
 		x = source.x;
 		y = source.y;
 	}
-
-	public Vector2f(float amount) {
-		x = amount;
-		y = amount;
+	
+	public Vector2f(float xy) {
+		x = xy;
+		y = xy;
 	}
 
 	public Vector2f() {

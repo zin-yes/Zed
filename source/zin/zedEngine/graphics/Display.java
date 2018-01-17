@@ -1,16 +1,21 @@
 package zin.zedEngine.graphics;
 
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_CURSOR_DISABLED;
+import static org.lwjgl.glfw.GLFW.GLFW_DECORATED;
 import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
 import static org.lwjgl.glfw.GLFW.GLFW_SAMPLES;
 import static org.lwjgl.glfw.GLFW.GLFW_VERSION_MAJOR;
 import static org.lwjgl.glfw.GLFW.GLFW_VERSION_MINOR;
 import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
 import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
+import static org.lwjgl.glfw.GLFW.glfwGetCursorPos;
 import static org.lwjgl.glfw.GLFW.glfwGetPrimaryMonitor;
 import static org.lwjgl.glfw.GLFW.glfwInit;
 import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
+import static org.lwjgl.glfw.GLFW.glfwSetCursorPos;
+import static org.lwjgl.glfw.GLFW.glfwSetInputMode;
 import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
@@ -22,6 +27,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL;
 
 import zin.zedEngine.game.Game;
+import zin.zedEngine.math.Vector2f;
 
 public class Display {
 
@@ -30,8 +36,7 @@ public class Display {
 	private int width, height, samples, state;
 	private String title;
 
-	private double newX, newY, prevX, prevY, dx, dy;
-	private boolean rotX, rotY;
+	private Mouse mouse;
 
 	public Display(int width, int height, String title, int state, int samples) {
 		this.width = width;
@@ -70,31 +75,107 @@ public class Display {
 		glfwMakeContextCurrent(identifier);
 		GL.createCapabilities();
 
-		newX = width / 2;
-		newY = height / 2;
+		glfwSwapInterval(0);
+
+		mouse = new Mouse(this);
+	}
+
+	public void updateDisplay() {
+		mouse.updateMouse();
+		
+		glfwPollEvents();
+		glfwSwapBuffers(identifier);
+	}
+
+	public void destroyDisplay() {
+		glfwDestroyWindow(identifier);
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public int getSamples() {
+		return samples;
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public boolean shouldClose() {
+		return glfwWindowShouldClose(identifier);
+	}
+
+	public long getIdentifier() {
+		return identifier;
+	}
+
+	public double getDX() {
+		return mouse.getDX();
+	}
+
+	public double getDY() {
+		return mouse.getDY();
+	}
+
+	public void setGrabbed(boolean grabbed) {
+		mouse.setGrabbed(grabbed);
+	}
+
+	public boolean getGrabbed() {
+		return mouse.getGrabbed();
+	}
+	
+	public Vector2f getMousePosition() {
+		return mouse.getMousePosition();
+	}
+
+}
+
+class Mouse {
+
+	private boolean grabbed = false;
+
+	private double newX, newY, prevX, prevY, dx, dy;
+	private boolean rotX, rotY;
+
+	private Display display;
+
+	public Mouse(Display display) {
+		this.display = display;
+
+		newX = display.getWidth() / 2;
+		newY = display.getHeight() / 2;
 
 		prevX = 0;
 		prevY = 0;
 
 		rotX = false;
 		rotY = false;
-
-		glfwSetInputMode(identifier, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	}
 
-	public void updateDisplay() {
+	public void updateMouse() {
 		DoubleBuffer x = BufferUtils.createDoubleBuffer(1);
 		DoubleBuffer y = BufferUtils.createDoubleBuffer(1);
 
-		glfwGetCursorPos(identifier, x, y);
+		glfwGetCursorPos(display.getIdentifier(), x, y);
 		x.rewind();
 		y.rewind();
 
 		newX = x.get();
 		newY = y.get();
 
-		double deltaX = newX - width / 2;
-		double deltaY = newY - height / 2;
+		double deltaX = newX - display.getWidth() / 2;
+		double deltaY = newY - display.getHeight() / 2;
 
 		rotX = newX != prevX;
 		rotY = newY != prevY;
@@ -109,22 +190,7 @@ public class Display {
 		prevX = newX;
 		prevY = newY;
 
-		glfwSetCursorPos(identifier, width / 2, height / 2);
-
-		glfwPollEvents();
-		glfwSwapBuffers(identifier);
-	}
-
-	public void destroyDisplay() {
-		glfwDestroyWindow(identifier);
-	}
-
-	public boolean shouldClose() {
-		return glfwWindowShouldClose(identifier);
-	}
-
-	public long getIdentifier() {
-		return identifier;
+		glfwSetCursorPos(display.getIdentifier(), display.getWidth() / 2, display.getHeight() / 2);
 	}
 
 	public double getDX() {
@@ -133,6 +199,26 @@ public class Display {
 
 	public double getDY() {
 		return dy;
+	}
+
+	public void setGrabbed(boolean grabbed) {
+		this.grabbed = grabbed;
+
+		if (grabbed) {
+			glfwSetInputMode(display.getIdentifier(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		} else {
+			glfwSetInputMode(display.getIdentifier(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		}
+	}
+
+	public boolean getGrabbed() {
+		return grabbed;
+	}
+
+	public Vector2f getMousePosition() {
+		double[] x = new double[1], y = new double[1];
+		glfwGetCursorPos(display.getIdentifier(), x, y);
+		return new Vector2f((float) x[0], (float) y[0]);
 	}
 
 }
