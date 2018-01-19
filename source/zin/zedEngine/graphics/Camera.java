@@ -2,6 +2,7 @@ package zin.zedEngine.graphics;
 
 import org.lwjgl.glfw.GLFW;
 
+import zin.zedEngine.graphics.shaders.BasicShader;
 import zin.zedEngine.math.Matrix4f;
 import zin.zedEngine.math.Vector3f;
 
@@ -19,22 +20,27 @@ public class Camera {
 		rotation = source.getRotation();
 	}
 
-	public void updateCamera(Display display) {
-		if (GLFW.glfwGetKey(display.getIdentifier(), GLFW.GLFW_KEY_W) == GLFW.GLFW_TRUE)
+	public Camera() {
+		position = new Vector3f();
+		rotation = new Vector3f();
+	}
+
+	public void updateCamera() {
+		if (Input.isKeyDown(GLFW.GLFW_KEY_W))
 			walkForward(0.2f);
-		if (GLFW.glfwGetKey(display.getIdentifier(), GLFW.GLFW_KEY_S) == GLFW.GLFW_TRUE)
+		if (Input.isKeyDown(GLFW.GLFW_KEY_S))
 			walkBackwards(0.2f);
-		if (GLFW.glfwGetKey(display.getIdentifier(), GLFW.GLFW_KEY_A) == GLFW.GLFW_TRUE)
+		if (Input.isKeyDown(GLFW.GLFW_KEY_A))
 			strafeRight(0.2f);
-		if (GLFW.glfwGetKey(display.getIdentifier(), GLFW.GLFW_KEY_D) == GLFW.GLFW_TRUE)
+		if (Input.isKeyDown(GLFW.GLFW_KEY_D))
 			strafeLeft(0.2f);
-		if(GLFW.glfwGetKey(display.getIdentifier(), GLFW.GLFW_KEY_SPACE) == GLFW.GLFW_TRUE)
+		if(Input.isKeyDown(GLFW.GLFW_KEY_SPACE))
 			position.y += 0.2f;
-		if(GLFW.glfwGetKey(display.getIdentifier(), GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_TRUE)
+		if(Input.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT))
 			position.y -= 0.2f;
 				
-		rotation.x -= display.getDY() * 0.2f;
-		rotation.y += display.getDX() * 0.2f;
+		rotation.x -= Input.getMouseDeltaY() * 0.2f;
+		rotation.y += Input.getMouseDeltaX() * 0.2f;
 
 		if(rotation.x > 360)
 			rotation.x = 0;
@@ -48,6 +54,9 @@ public class Camera {
 			rotation.z = 0;
 		if(rotation.z < 0)
 			rotation.z = 360;
+		
+		BasicShader.getInstance().bindShader();
+		BasicShader.setViewMatrix(getTransform());
 	}
 
 	public void walkForward(float distance) {
@@ -74,8 +83,16 @@ public class Camera {
 		return position;
 	}
 
+	public void setPosition(Vector3f position) {
+		this.position = position;
+	}
+
 	public Vector3f getRotation() {
 		return rotation;
+	}
+
+	public void setRotation(Vector3f rotation) {
+		this.rotation = rotation;
 	}
 
 	public Matrix4f getTransform() {

@@ -16,8 +16,8 @@ import zin.zedEngine.math.Vector3f;
 
 public abstract class Shader {
 
-	protected int programID, vertexShaderID, fragmentShaderID;
-	protected Map<String, Integer> uniforms = new HashMap<>();
+	protected static int programID, vertexShaderID, fragmentShaderID;
+	protected static Map<String, Integer> uniforms = new HashMap<>();
 
 	public Shader(String fileName) {
 		StringBuilder vertexShaderSource = new StringBuilder();
@@ -76,40 +76,53 @@ public abstract class Shader {
 		GL20.glBindAttribLocation(programID, 2, "normal");
 	}
 
-	protected void addUniform(String name) {
+	protected static void addUniform(String name) {
 		uniforms.put(name, GL20.glGetUniformLocation(programID, name));
 	}
 
-	protected void setUniform(String name, Vector2f value) {
+	protected static void setUniform(String name, Vector2f value) {
 		GL20.glUniform2f(uniforms.get(name), value.x, value.y);
 	}
 
-	protected void setUniform(String name, Vector3f value) {
+	protected static void setUniform(String name, Vector3f value) {
 		GL20.glUniform3f(uniforms.get(name), value.x, value.y, value.z);
 	}
 
-	protected void setUniform(String name, Matrix4f value) {
+	protected static void setUniform(String name, Matrix4f value) {
 		GL20.glUniformMatrix4fv(uniforms.get(name), true, value.getMatrixBuffer());
 	}
 
-	protected void setUniform(String name, float value) {
+	protected static void setUniform(String name, float value) {
 		GL20.glUniform1f(uniforms.get(name), value);
 	}
 
-	protected void setUniform(String name, int value) {
+	protected static void setUniform(String name, int value) {
 		GL20.glUniform1i(uniforms.get(name), value);
 	}
 
-	protected int getUnifrom(String name) {
+	protected static int getUnifrom(String name) {
 		return uniforms.get(name);
 	}
 
-	public void bindShader() {
+	protected void bindShader() {
 		GL20.glUseProgram(programID);
 	}
 
-	public void unbindShader() {
+	protected void unbindShader() {
 		GL20.glUseProgram(0);
+	}
+
+	protected void cleanUp() {
+		unbindShader();
+		GL20.glDetachShader(programID, vertexShaderID);
+		GL20.glDetachShader(programID, fragmentShaderID);
+		GL20.glDeleteShader(vertexShaderID);
+		GL20.glDeleteShader(fragmentShaderID);
+		GL20.glDeleteShader(programID);
+	}
+
+	protected void updateUniforms(Matrix4f transformationMatrix) {
+		setUniform("transformationMatrix", transformationMatrix);
 	}
 
 }

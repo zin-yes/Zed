@@ -24,5 +24,6 @@ void main()
 	
 	vec4 brightness = (vec4(nDotl, nDotl, nDotl, 1.0) * vec4(sunColor, 1.0)) / attFac;
 	
-	out_Color = brightness * texture(textureSampler, passTextureCoords);
+	//out_Color = brightness * texture(textureSampler, passTextureCoords);
+	out_Color = texture(textureSampler, passTextureCoords);
 }

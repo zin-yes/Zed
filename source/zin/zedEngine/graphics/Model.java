@@ -22,9 +22,10 @@ public class Model {
 	private Material material;
 	private int vaoID, vertexCount;
 
+	private List<Integer> vbos = new ArrayList<>();
+
 	public Model(String fileName) {
-		InputStreamReader isr = new InputStreamReader(
-				Class.class.getResourceAsStream("/models/" + fileName + ".obj"));
+		InputStreamReader isr = new InputStreamReader(Class.class.getResourceAsStream("/models/" + fileName + ".obj"));
 		BufferedReader reader = new BufferedReader(isr);
 		String line;
 		List<Vertex> vertices = new ArrayList<Vertex>();
@@ -80,8 +81,8 @@ public class Model {
 		vaoID = GL30.glGenVertexArrays();
 		GL30.glBindVertexArray(vaoID);
 
-		int vertexVboID = GL15.glGenBuffers();
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vertexVboID);
+		int vertexID = GL15.glGenBuffers();
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vertexID);
 		FloatBuffer verticesBuffer = BufferUtils.createFloatBuffer(verticesArray.length);
 		verticesBuffer.put(verticesArray);
 		verticesBuffer.flip();
@@ -113,6 +114,11 @@ public class Model {
 		indicesBuffer.put(indicesArray);
 		indicesBuffer.flip();
 		GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, indicesBuffer, GL15.GL_STATIC_DRAW);
+
+		vbos.add(vertexID);
+		vbos.add(textureCoordsID);
+		vbos.add(normalsID);
+		vbos.add(indicesID);
 
 		vertexCount = indicesArray.length;
 	}
@@ -228,6 +234,25 @@ public class Model {
 
 	public int getVertexCount() {
 		return vertexCount;
+	}
+
+	public void cleanUp() {
+		GL30.glDeleteVertexArrays(vaoID);
+		for (int vbo : vbos) {
+			GL15.glDeleteBuffers(vbo);
+		}
+	}
+
+	public void render() {
+		GL30.glBindVertexArray(vaoID);
+		GL20.glEnableVertexAttribArray(0);
+		GL20.glEnableVertexAttribArray(1);
+		GL20.glEnableVertexAttribArray(2);
+		GL11.glDrawElements(GL11.GL_TRIANGLES, vertexCount, GL11.GL_UNSIGNED_INT, 0);
+		GL20.glDisableVertexAttribArray(0);
+		GL20.glDisableVertexAttribArray(1);
+		GL20.glDisableVertexAttribArray(2);
+		GL30.glBindVertexArray(0);
 	}
 
 }
