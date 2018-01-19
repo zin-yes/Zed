@@ -10,36 +10,42 @@ import zin.zedEngine.graphics.Texture;
 import zin.zedEngine.graphics.shaders.BasicShader;
 
 public class TestGame extends Game {
-	
+
 	private GameObject root;
+	private GameObject object;
 	private Camera camera;
 
 	@Override
 	public void init() {
 		root = new GameObject();
 		camera = new Camera();
-		
-		Material material = new Material(BasicShader.getInstance(), new Texture("concrete"));
-		Model model = new Model("dragon");
-		
-		ModelRenderer renderer = new ModelRenderer(model, material);
-		root.addComponent(renderer);
+
+		object = new GameObject();
+		object.addComponent(new ModelRenderer(new Model("dragon"),
+				new Material(BasicShader.getInstance(), new Texture("concrete"))));
+
+		root.addChild(object);
 	}
 
 	@Override
 	public void update() {
 		root.update();
-		camera.updateCamera();
 	}
 
 	@Override
 	public void input() {
+		camera.updateCamera();
 		root.input();
 	}
 
 	@Override
 	public void render() {
 		root.render();
+	}
+
+	@Override
+	public void cleanUp() {
+		root.cleanUp();
 	}
 
 }

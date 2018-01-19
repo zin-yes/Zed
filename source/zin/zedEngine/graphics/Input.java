@@ -16,10 +16,10 @@ import org.lwjgl.BufferUtils;
 import zin.zedEngine.math.Vector2f;
 
 public class Input {
-	
+
 	private static Keyboard keyboard;
 	private static Mouse mouse;
-	
+
 	public static void init() {
 		keyboard = new Keyboard();
 		mouse = new Mouse();
@@ -29,23 +29,23 @@ public class Input {
 		keyboard.updateKeyboard();
 		mouse.updateMouse();
 	}
-	
+
 	public static boolean isKeyDown(int keyCode) {
 		return keyboard.isKeyDown(keyCode);
 	}
-	
+
 	public static boolean isKeyPressed(int keyCode) {
 		return keyboard.isKeyPressed(keyCode);
 	}
-	
+
 	public static boolean isKeyReleased(int keyCode) {
 		return keyboard.isKeyReleased(keyCode);
 	}
-	
+
 	public static double getMouseDeltaX() {
 		return mouse.getDX();
 	}
-	
+
 	public static double getMouseDeltaY() {
 		return mouse.getDY();
 	}
@@ -61,7 +61,7 @@ public class Input {
 	public static Vector2f getMousePosition() {
 		return mouse.getMousePosition();
 	}
-	
+
 }
 
 class Keyboard {
@@ -112,33 +112,35 @@ class Mouse {
 	}
 
 	public void updateMouse() {
-		DoubleBuffer x = BufferUtils.createDoubleBuffer(1);
-		DoubleBuffer y = BufferUtils.createDoubleBuffer(1);
+		if (grabbed) {
+			DoubleBuffer x = BufferUtils.createDoubleBuffer(1);
+			DoubleBuffer y = BufferUtils.createDoubleBuffer(1);
 
-		glfwGetCursorPos(Display.getIdentifier(), x, y);
-		x.rewind();
-		y.rewind();
+			glfwGetCursorPos(Display.getIdentifier(), x, y);
+			x.rewind();
+			y.rewind();
 
-		newX = x.get();
-		newY = y.get();
+			newX = x.get();
+			newY = y.get();
 
-		double deltaX = newX - Display.getWidth() / 2;
-		double deltaY = newY - Display.getHeight() / 2;
+			double deltaX = newX - Display.getWidth() / 2;
+			double deltaY = newY - Display.getHeight() / 2;
 
-		rotX = newX != prevX;
-		rotY = newY != prevY;
+			rotX = newX != prevX;
+			rotY = newY != prevY;
 
-		if (rotX) {
-			dx = deltaX;
+			if (rotX) {
+				dx = deltaX;
+			}
+			if (rotY) {
+				dy = deltaY;
+			}
+
+			prevX = newX;
+			prevY = newY;
+
+			glfwSetCursorPos(Display.getIdentifier(), Display.getWidth() / 2, Display.getHeight() / 2);
 		}
-		if (rotY) {
-			dy = deltaY;
-		}
-
-		prevX = newX;
-		prevY = newY;
-
-		glfwSetCursorPos(Display.getIdentifier(), Display.getWidth() / 2, Display.getHeight() / 2);
 	}
 
 	public double getDX() {

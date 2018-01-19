@@ -34,27 +34,34 @@ public class Camera {
 			strafeRight(0.2f);
 		if (Input.isKeyDown(GLFW.GLFW_KEY_D))
 			strafeLeft(0.2f);
-		if(Input.isKeyDown(GLFW.GLFW_KEY_SPACE))
+		if (Input.isKeyDown(GLFW.GLFW_KEY_SPACE))
 			position.y += 0.2f;
-		if(Input.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT))
+		if (Input.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT))
 			position.y -= 0.2f;
-				
-		rotation.x -= Input.getMouseDeltaY() * 0.2f;
-		rotation.y += Input.getMouseDeltaX() * 0.2f;
 
-		if(rotation.x > 360)
+		if(Input.isKeyDown(GLFW.GLFW_KEY_F1))
+			Input.setMouseGrabbed(true);
+		if(Input.isKeyDown(GLFW.GLFW_KEY_F2))
+			Input.setMouseGrabbed(false);
+			
+		if (Input.getMouseGrabbed()) {
+			rotation.x -= Input.getMouseDeltaY() * 0.2f;
+			rotation.y += Input.getMouseDeltaX() * 0.2f;
+		}
+
+		if (rotation.x > 360)
 			rotation.x = 0;
-		if(rotation.x < 0)
+		if (rotation.x < 0)
 			rotation.x = 360;
-		if(rotation.y > 360)
+		if (rotation.y > 360)
 			rotation.y = 0;
-		if(rotation.y < 0)
+		if (rotation.y < 0)
 			rotation.y = 360;
-		if(rotation.z > 360)
+		if (rotation.z > 360)
 			rotation.z = 0;
-		if(rotation.z < 0)
+		if (rotation.z < 0)
 			rotation.z = 360;
-		
+
 		BasicShader.getInstance().bindShader();
 		BasicShader.setViewMatrix(getTransform());
 	}

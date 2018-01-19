@@ -18,5 +18,11 @@ public class ModelRenderer extends GameComponent {
 		material.updateUniforms(transform);
 		model.render();
 	}
+	
+	@Override
+	public void cleanUp() {
+		material.cleanUp();
+		model.cleanUp();
+	}
 
 }

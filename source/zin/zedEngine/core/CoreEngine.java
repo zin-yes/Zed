@@ -12,6 +12,7 @@ import zin.zedEngine.graphics.Display;
 import zin.zedEngine.graphics.DisplayState;
 import zin.zedEngine.graphics.Input;
 import zin.zedEngine.graphics.shaders.BasicShader;
+import zin.zedEngine.graphics.shaders.PhongShader;
 
 public class CoreEngine {
 
@@ -37,6 +38,7 @@ public class CoreEngine {
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glCullFace(GL11.GL_BACK);
 		BasicShader.init();
+		PhongShader.init(120, width, height, 0.1f, 1000);
 	}
 	
 	public void createDisplay(String title, DisplayState state, int samples) {
@@ -135,6 +137,7 @@ public class CoreEngine {
 
 	private void cleanEngine() {
 		Display.destroyDisplay();
+		game.cleanUp();
 	}
 
 	public double getTime() {

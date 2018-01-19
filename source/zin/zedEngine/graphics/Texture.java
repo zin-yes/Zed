@@ -45,5 +45,9 @@ public class Texture {
 	public void unbindTexture() {
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 	}
+	
+	public void cleanUp() {
+		GL11.glDeleteTextures(textureID);
+	}
 
 }

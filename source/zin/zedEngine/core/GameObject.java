@@ -50,6 +50,14 @@ public class GameObject {
 			child.render();
 	}
 	
+	public void cleanUp() {
+		for(GameComponent component : components)
+			component.cleanUp();
+
+		for (GameObject child : children)
+			child.cleanUp();
+	}
+	
 	public Transform getTransform() {
 		return transform;
 	}

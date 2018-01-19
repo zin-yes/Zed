@@ -1,4 +1,4 @@
-package zin.zedEngine.math;
+ package zin.zedEngine.math;
 
 public class Vector3f {
 

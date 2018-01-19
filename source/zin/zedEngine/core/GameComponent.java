@@ -15,5 +15,9 @@ public abstract class GameComponent {
 	public void render(Transform transform) {
 
 	}
+	
+	public void cleanUp() {
+		
+	}
 
 }
