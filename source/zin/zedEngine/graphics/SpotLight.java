@@ -14,7 +14,7 @@ public class SpotLight {
 
 	public SpotLight(Vector3f position, Vector3f color) {
 		this.position = position;
-		this.color = new Vector3f(1);
+		this.color = color;
 		attenuation = new Vector3f(1, 0, 0);
 	}
 

@@ -40,7 +40,7 @@ public class CoreEngine {
 		BasicShader.init();
 		PhongShader.init(120, width, height, 0.1f, 1000);
 	}
-	
+
 	public void createDisplay(String title, DisplayState state, int samples) {
 		Display.createDisplay(width, height, title, state, samples);
 		initRenderingSystem();
@@ -85,9 +85,11 @@ public class CoreEngine {
 					stopEngine();
 
 				Input.updateInput();
+				game.getRootObject().input();
 				game.input();
 
 				updates++;
+				game.getRootObject().update();
 				game.update();
 
 				if (frameCounter >= 1.0) {
@@ -100,6 +102,7 @@ public class CoreEngine {
 			}
 			if (render) {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+				game.getRootObject().render();
 				game.render();
 				Display.updateDisplay();
 				frames++;
@@ -137,6 +140,7 @@ public class CoreEngine {
 
 	private void cleanEngine() {
 		Display.destroyDisplay();
+		game.getRootObject().cleanUp();
 		game.cleanUp();
 	}
 

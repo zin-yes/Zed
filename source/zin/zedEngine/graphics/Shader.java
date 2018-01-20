@@ -104,11 +104,11 @@ public abstract class Shader {
 		return uniforms.get(name);
 	}
 
-	protected void bindShader() {
+	public void bindShader() {
 		GL20.glUseProgram(programID);
 	}
 
-	protected void unbindShader() {
+	public void unbindShader() {
 		GL20.glUseProgram(0);
 	}
 
