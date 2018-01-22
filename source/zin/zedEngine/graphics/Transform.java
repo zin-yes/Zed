@@ -44,7 +44,7 @@ public class Transform {
 	}
 
 	public Matrix4f getTransformationMatrix() {
-		Matrix4f position = new Matrix4f().translate(this.position);
+		Matrix4f position = new Matrix4f().translate(new Vector3f(this.position).negate());
 		Matrix4f rotation = new Matrix4f().rotate(this.rotation);
 		Matrix4f scale = new Matrix4f().scale(this.scale);
 

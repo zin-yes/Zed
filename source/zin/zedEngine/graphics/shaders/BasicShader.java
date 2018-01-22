@@ -1,5 +1,6 @@
 package zin.zedEngine.graphics.shaders;
 
+import zin.zedEngine.graphics.Camera;
 import zin.zedEngine.graphics.Shader;
 import zin.zedEngine.math.Matrix4f;
 
@@ -32,8 +33,8 @@ public class BasicShader extends Shader {
 		setUniform("projectionMatrix", new Matrix4f().perspective(fov, width, height, zNear, zFar));
 		}
 
-	public static void setViewMatrix(Matrix4f view) {
-		setUniform("viewMatrix", view);
+	public static void setViewMatrix(Camera camera) {
+		setUniform("viewMatrix", camera.getTransform());
 	}
 	
 	public static BasicShader getInstance() {

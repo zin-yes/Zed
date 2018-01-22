@@ -63,7 +63,7 @@ public class Camera {
 			rotation.z = 360;
 
 		BasicShader.getInstance().bindShader();
-		BasicShader.setViewMatrix(getTransform());
+		BasicShader.setViewMatrix(this);
 	}
 
 	public void walkForward(float distance) {

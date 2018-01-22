@@ -18,11 +18,25 @@ public class ModelRenderer extends GameComponent {
 		material.updateUniforms(transform);
 		model.render();
 	}
+
+	@Override
+	public void update(Transform transform) {
+		
+	}
+
+	@Override
+	public void input(Transform transform) {
+		
+	}
 	
 	@Override
 	public void cleanUp() {
 		material.cleanUp();
 		model.cleanUp();
+	}
+
+	public void setTextureMultiplier(float multiplier) {
+		material.setTextureMultiplier(multiplier);
 	}
 
 }

@@ -3,6 +3,8 @@ package zin.zedEngine.graphics;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
+import zin.zedEngine.graphics.shaders.PhongShader;
+
 public class Material {
 
 	// TODO: Add shader and reflectivity and damping etc..
@@ -35,6 +37,15 @@ public class Material {
 	public void cleanUp() {
 		GL11.glDeleteTextures(texture.getTextureID());
 		shader.cleanUp();
+	}
+
+	public void setTextureMultiplier(float multiplier) {
+		shader.bindShader();
+		try {
+			((PhongShader) shader).setTextureMultiplier(multiplier);
+		} catch (Exception e) {
+			System.out.println("Can't apply texture multiplier not PhongShader!");
+		}
 	}
 	
 }

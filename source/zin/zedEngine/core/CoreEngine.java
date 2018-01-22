@@ -141,7 +141,6 @@ public class CoreEngine {
 	private void cleanEngine() {
 		Display.destroyDisplay();
 		game.getRootObject().cleanUp();
-		game.cleanUp();
 	}
 
 	public double getTime() {

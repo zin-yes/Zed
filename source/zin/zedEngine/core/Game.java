@@ -12,8 +12,6 @@ public abstract class Game {
 	
 	public abstract void render();
 
-	public abstract void cleanUp();
-	
 	public GameObject getRootObject() {
 		if(root== null)
 			root = new GameObject();

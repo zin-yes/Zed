@@ -5,8 +5,10 @@ import zin.zedEngine.graphics.Camera;
 import zin.zedEngine.graphics.Material;
 import zin.zedEngine.graphics.Model;
 import zin.zedEngine.graphics.ModelRenderer;
+import zin.zedEngine.graphics.SpotLight;
 import zin.zedEngine.graphics.Texture;
 import zin.zedEngine.graphics.shaders.PhongShader;
+import zin.zedEngine.math.Vector3f;
 
 public class TestGame extends Game {
 
@@ -14,30 +16,28 @@ public class TestGame extends Game {
 
 	@Override
 	public void init() {
-		camera = new Camera();
-		
-		getRootObject().addComponent(new ModelRenderer(new Model("dragon"),
-				new Material(PhongShader.getInstance(), new Texture("concrete"))));
+		camera = new Camera(new Vector3f(), new Vector3f());
+
+		getRootObject().addComponent(new SpotLight(new Vector3f(0, 100, 0)));
+		ModelRenderer modelRenderer = new ModelRenderer(new Model("sphere"),
+				new Material(PhongShader.getInstance(), new Texture("concrete")));
+		modelRenderer.setTextureMultiplier(0.11f);
+		getRootObject().addComponent(modelRenderer);
 	}
 
 	@Override
 	public void update() {
-		
-	}
-
-	@Override
-	public void input() {
 		camera.updateCamera();
 	}
 
 	@Override
-	public void render() {
+	public void input() {
 		
 	}
 
 	@Override
-	public void cleanUp() {
-		
+	public void render() {
+
 	}
 
 }
