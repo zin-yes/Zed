@@ -6,14 +6,14 @@ import java.util.List;
 import zin.zedEngine.graphics.Camera;
 import zin.zedEngine.graphics.DirectionalLight;
 import zin.zedEngine.graphics.Shader;
-import zin.zedEngine.graphics.SpotLight;
+import zin.zedEngine.graphics.PointLight;
 import zin.zedEngine.math.Matrix4f;
 import zin.zedEngine.math.Vector3f;
 
 public class PhongShader extends Shader {
 
 	private static PhongShader shader;
-	private static List<SpotLight> spotLights;
+	private static List<PointLight> spotLights;
 	private static List<DirectionalLight> directionalLights;
 
 	public PhongShader() {
@@ -62,7 +62,7 @@ public class PhongShader extends Shader {
 		shader.unbindShader();
 	}
 
-	public static void setLights(List<SpotLight> spotLights, List<DirectionalLight> directionalLights) {
+	public static void setLights(List<PointLight> spotLights, List<DirectionalLight> directionalLights) {
 		for (int i = 0; i < 14; i++) {
 			if (i < spotLights.size()) {
 				setUniform("spotLightPosition[" + i + "]", spotLights.get(i).getPosition());
@@ -104,7 +104,7 @@ public class PhongShader extends Shader {
 		return shader;
 	}
 
-	public static boolean addLight(SpotLight spotLight) {
+	public static boolean addLight(PointLight spotLight) {
 		if (spotLights.size() > 14)
 			return false;
 

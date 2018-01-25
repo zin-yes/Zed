@@ -4,11 +4,11 @@ import zin.zedEngine.core.GameComponent;
 import zin.zedEngine.graphics.shaders.PhongShader;
 import zin.zedEngine.math.Vector3f;
 
-public class SpotLight extends GameComponent {
+public class PointLight extends GameComponent {
 
 	private Vector3f position, color, attenuation;
 
-	public SpotLight(Vector3f position, Vector3f color, Vector3f attenuation) {
+	public PointLight(Vector3f position, Vector3f color, Vector3f attenuation) {
 		this.position = position;
 		this.color = color;
 		this.attenuation = attenuation;
@@ -16,7 +16,7 @@ public class SpotLight extends GameComponent {
 			System.out.println("Too many lights failed to add light: " + position);
 	}
 
-	public SpotLight(Vector3f position, Vector3f color) {
+	public PointLight(Vector3f position, Vector3f color) {
 		this.position = position;
 		this.color = color;
 		attenuation = new Vector3f(1, 0, 0);
@@ -24,7 +24,7 @@ public class SpotLight extends GameComponent {
 			System.out.println("Too many lights failed to add light: " + position);
 	}
 
-	public SpotLight(Vector3f position) {
+	public PointLight(Vector3f position) {
 		this.position = position;
 		color = new Vector3f(1);
 		attenuation = new Vector3f(1, 0, 0);

@@ -39,14 +39,14 @@ public class Camera {
 		if (Input.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT))
 			position.y -= 0.2f;
 
-		if(Input.isKeyDown(GLFW.GLFW_KEY_F1))
+		if (Input.isKeyDown(GLFW.GLFW_KEY_F1))
 			Input.setMouseGrabbed(true);
-		if(Input.isKeyDown(GLFW.GLFW_KEY_F2))
+		if (Input.isKeyDown(GLFW.GLFW_KEY_F2))
 			Input.setMouseGrabbed(false);
-			
+
 		if (Input.getMouseGrabbed()) {
-			rotation.x -= Input.getMouseDeltaY() * 0.2f;
-			rotation.y += Input.getMouseDeltaX() * 0.2f;
+			rotation.x -= Input.getMouseDeltaY() * 0.1f;
+			rotation.y += Input.getMouseDeltaX() * 0.1f;
 		}
 
 		if (rotation.x > 360)

@@ -1,6 +1,6 @@
 package zin.zedEngine.graphics;
 
-import static org.lwjgl.glfw.GLFW.GLFW_DECORATED;
+import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
 import static org.lwjgl.glfw.GLFW.GLFW_SAMPLES;
 import static org.lwjgl.glfw.GLFW.GLFW_VERSION_MAJOR;
@@ -59,7 +59,7 @@ public class Display {
 		glfwPollEvents();
 		glfwSwapBuffers(identifier);
 	}
-	
+
 	public static void destroyDisplay() {
 		glfwDestroyWindow(identifier);
 	}

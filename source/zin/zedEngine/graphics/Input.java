@@ -51,6 +51,7 @@ public class Input {
 	}
 
 	public static void setMouseGrabbed(boolean grabbed) {
+		glfwSetCursorPos(Display.getIdentifier(), Display.getWidth() / 2, Display.getHeight() / 2);
 		mouse.setGrabbed(grabbed);
 	}
 
