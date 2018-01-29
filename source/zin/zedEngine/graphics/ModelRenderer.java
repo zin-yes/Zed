@@ -13,6 +13,11 @@ public class ModelRenderer extends GameComponent {
 	}
 
 	@Override
+	public void init(Transform transform) {
+		
+	}
+	
+	@Override
 	public void render(Transform transform) {
 		material.bindMaterial();
 		material.updateUniforms(transform);
@@ -38,5 +43,5 @@ public class ModelRenderer extends GameComponent {
 	public void setTextureMultiplier(float multiplier) {
 		material.setTextureMultiplier(multiplier);
 	}
-
+	
 }

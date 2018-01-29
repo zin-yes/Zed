@@ -38,7 +38,7 @@ public class CoreEngine {
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glCullFace(GL11.GL_BACK);
 		BasicShader.init();
-		PhongShader.init(120, width, height, 0.1f, 1000);
+		PhongShader.init(96, width, height, 0.1f, 1000);
 	}
 
 	public void createDisplay(String title, DisplayState state, int samples) {

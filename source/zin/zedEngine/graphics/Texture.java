@@ -4,8 +4,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 
+import org.lwjgl.opengl.EXTTextureFilterAnisotropic;
+import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
+import org.lwjgl.opengl.GL14;
+import org.lwjgl.opengl.GL30;
 
 import de.matthiasmann.twl.utils.PNGDecoder;
 
@@ -25,9 +29,22 @@ public class Texture {
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
 			GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB, decoder.getWidth(), decoder.getHeight(), 0,
 					GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, buf);
-			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
+			GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, 0);
+
+			if (GL.getCapabilities().GL_EXT_texture_filter_anisotropic) {
+				float amount = Math.min(4f,
+						GL11.glGetFloat(EXTTextureFilterAnisotropic.GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT));
+				GL11.glTexParameterf(GL11.GL_TEXTURE_2D, EXTTextureFilterAnisotropic.GL_TEXTURE_MAX_ANISOTROPY_EXT,
+						amount);
+			} else {
+				System.out.println("Anisotropic Filtering not supported.");
+			}
 			in.close();
+			GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -45,7 +62,7 @@ public class Texture {
 	public void unbindTexture() {
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 	}
-	
+
 	public void cleanUp() {
 		GL11.glDeleteTextures(textureID);
 	}

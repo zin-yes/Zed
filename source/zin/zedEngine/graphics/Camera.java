@@ -8,21 +8,24 @@ import zin.zedEngine.math.Vector3f;
 
 public class Camera {
 
-	private Vector3f position, rotation;
+	protected Vector3f position, rotation, velocity;
 
 	public Camera(Vector3f position, Vector3f rotation) {
 		this.position = position;
 		this.rotation = rotation;
+		this.velocity = new Vector3f();
 	}
 
 	public Camera(Camera source) {
 		position = source.getPosition();
 		rotation = source.getRotation();
+		velocity = source.getVelocity();
 	}
 
 	public Camera() {
 		position = new Vector3f();
 		rotation = new Vector3f();
+		velocity = new Vector3f();
 	}
 
 	public void updateCamera() {
@@ -76,12 +79,12 @@ public class Camera {
 		position.z -= distance * (float) Math.cos(Math.toRadians(rotation.y));
 	}
 
-	public void strafeLeft(float distance) {
+	public void strafeRight(float distance) {
 		position.x += distance * (float) Math.sin(Math.toRadians(rotation.y + 90));
 		position.z += distance * (float) Math.cos(Math.toRadians(rotation.y + 90));
 	}
 
-	public void strafeRight(float distance) {
+	public void strafeLeft(float distance) {
 		position.x += distance * (float) Math.sin(Math.toRadians(rotation.y - 90));
 		position.z += distance * (float) Math.cos(Math.toRadians(rotation.y - 90));
 	}
@@ -100,6 +103,14 @@ public class Camera {
 
 	public void setRotation(Vector3f rotation) {
 		this.rotation = rotation;
+	}
+
+	public Vector3f getVelocity() {
+		return velocity;
+	}
+
+	public void Velocity(Vector3f velocity) {
+		this.velocity = velocity;
 	}
 
 	public Matrix4f getTransform() {

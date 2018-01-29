@@ -7,7 +7,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		CoreEngine engine = new CoreEngine(1280, 720, 60, new TestGame());
-		engine.createDisplay("Zed Engine", DisplayState.WINDOWED, 4);
+		engine.createDisplay("Zed Engine", DisplayState.WINDOWED, 16);
 		engine.startEngine();
 	}
 

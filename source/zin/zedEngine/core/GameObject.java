@@ -18,12 +18,22 @@ public class GameObject {
 		transform = new Transform();
 	}
 
-	public void addChild(GameObject child) {
+	public GameObject addChild(GameObject child) {
 		children.add(child);
+		return this;
 	}
 
-	public void addComponent(GameComponent component) {
+	public GameObject addComponent(GameComponent component) {
 		components.add(component);
+		return this;
+	}
+
+	public void init() {
+		for (GameComponent component : components)
+			component.init(transform);
+		
+		for (GameObject child : children)
+			child.init();
 	}
 
 	public void input() {

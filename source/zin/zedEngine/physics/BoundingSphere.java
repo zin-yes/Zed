@@ -27,4 +27,8 @@ public class BoundingSphere {
 		return radius;
 	}
 
+	public void setCenter(Vector3f center) {
+		this.center = center;
+	}
+
 }

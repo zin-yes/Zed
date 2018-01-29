@@ -1,9 +1,9 @@
 #version 440 core
 
-in vec3 cameraDir;
-in vec3 passPosition;
-in vec2 passTextureCoords;
-in vec3 passNormal;
+varying vec3 cameraDir;
+varying vec3 passPosition;
+varying vec2 passTextureCoords;
+varying vec3 passNormal;
 
 out vec4 out_Color;
 

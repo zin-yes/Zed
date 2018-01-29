@@ -33,6 +33,11 @@ public class PointLight extends GameComponent {
 	}
 
 	@Override
+	public void init(Transform transform) {
+		
+	}
+
+	@Override
 	public void update(Transform transform) {
 
 	}

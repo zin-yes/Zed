@@ -17,6 +17,8 @@ import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
 import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 
 public class Display {
 
@@ -47,6 +49,8 @@ public class Display {
 		GL.createCapabilities();
 
 		glfwSwapInterval(0);
+		
+		GL11.glEnable(GL13.GL_MULTISAMPLE);
 
 		Display.width = width;
 		Display.height = height;
