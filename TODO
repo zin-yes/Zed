@@ -1,0 +1,24 @@
+>> TODO 29118 <<
+core:
+	- Easier rendering
+	- Object list
+	- Easier to change transform
+	- Don't pass in new instances of things like model texture in constructer
+	- Easier to get shader
+	- Make it possible to script scenes
+	- Connect the physics engine with the normal engine.
+	- Remove all the hard-coded stuff
+	- Better rendering (more efficient)
+	- Custom model files
+	- Configuration file for models
+shaders:
+	- More shaders
+	- Specular lighting
+	- Better diffuse
+	- Customizable shader values
+physics:
+	- Add axis-aligned bounding boxes
+	- Add rotatable bounding boxes
+	- Add deflection for physics objects
+math:
+	- Add more math functions (dot, cross, etc)
