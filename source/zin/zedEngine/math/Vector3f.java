@@ -204,4 +204,11 @@ public class Vector3f {
 		return this;
 	}
 
+	public Vector3f round() {
+		float _x = Math.round(x);
+		float _y = Math.round(y);
+		float _z = Math.round(z);
+		return new Vector3f(_x, _y, _z);
+	}
+
 }

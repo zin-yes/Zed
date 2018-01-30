@@ -15,7 +15,7 @@ public class Material {
 		this.shader = shader;
 		this.texture = texture;
 	}
-	
+
 	public Texture getTexture() {
 		return texture;
 	}
@@ -44,8 +44,8 @@ public class Material {
 		try {
 			((PhongShader) shader).setTextureMultiplier(multiplier);
 		} catch (Exception e) {
-			System.out.println("Can't apply texture multiplier not PhongShader!");
+			System.err.println("Can't apply texture multiplier!");
 		}
 	}
-	
+
 }

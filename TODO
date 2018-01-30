@@ -1,7 +1,7 @@
 >> TODO 29118 <<
 core:
 	- Easier rendering
-	- Object list
+	- Object list <SCRAPPED>
 	- Easier to change transform
 	- Don't pass in new instances of things like model texture in constructer
 	- Easier to get shader
