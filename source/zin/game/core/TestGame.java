@@ -21,41 +21,21 @@ public class TestGame extends Game {
 
 	private Player camera;
 	private Terrain terrain;
-	private Terrain terrain1;
-	private Terrain terrain2;
-	private Terrain terrain3;
 
 	@Override
 	public void init() {
 		camera = new Player(new Vector3f(0, 0, 0), new Vector3f(0, 0, 0));
 
 		terrain = new Terrain(0, 0, "terrain");
-		terrain1 = new Terrain(0, -1, "terrain");
-		terrain2 = new Terrain(-1, -1, "terrain");
-		terrain3 = new Terrain(-1, 0, "terrain");
 
 		ModelRenderer planeRenderer = new ModelRenderer(terrain.getModel(),
 				new Material(PhongShader.getInstance(), new Texture("tile")));
 
-		ModelRenderer plane1Renderer = new ModelRenderer(terrain1.getModel(),
-				new Material(PhongShader.getInstance(), new Texture("tile")));
-
-		ModelRenderer plane2Renderer = new ModelRenderer(terrain2.getModel(),
-				new Material(PhongShader.getInstance(), new Texture("tile")));
-
-		ModelRenderer plane3Renderer = new ModelRenderer(terrain3.getModel(),
-				new Material(PhongShader.getInstance(), new Texture("tile")));
 		planeRenderer.setTextureMultiplier(0.25f);
 
 		GameObject plane = new GameObject();
-		GameObject plane1 = new GameObject();
-		GameObject plane2 = new GameObject();
-		GameObject plane3 = new GameObject();
 
 		plane.addComponent(planeRenderer);
-		plane1.addComponent(plane1Renderer);
-		plane2.addComponent(plane2Renderer);
-		plane3.addComponent(plane3Renderer);
 
 		GameObject sphere = new GameObject().addComponent(new ModelRenderer(new Model("dragon"),
 				new Material(PhongShader.getInstance(), new Texture("concrete"))));
@@ -66,9 +46,6 @@ public class TestGame extends Game {
 
 		getRootObject().addComponent(new DirectionalLight(new Vector3f(0, 1, 0), new Vector3f(1, 1, 1)));
 		getRootObject().addChild(plane);
-		getRootObject().addChild(plane1);
-		getRootObject().addChild(plane2);
-		getRootObject().addChild(plane3);
 	}
 
 	@Override

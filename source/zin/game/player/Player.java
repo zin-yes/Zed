@@ -4,7 +4,7 @@ import org.lwjgl.glfw.GLFW;
 
 import zin.zedEngine.graphics.Camera;
 import zin.zedEngine.graphics.Input;
-import zin.zedEngine.graphics.shaders.BasicShader;
+import zin.zedEngine.graphics.shaders.PhongShader;
 import zin.zedEngine.math.Vector3f;
 
 public class Player extends Camera {
@@ -58,9 +58,34 @@ public class Player extends Camera {
 			rotation.z = 0;
 		if (rotation.z < 0)
 			rotation.z = 360;
+		
+		position.x += velocity.x;
+		position.z += velocity.z;
+		
+		velocity = velocity.lerp(new Vector3f(0, velocity.y, 0), 0.2f);
+		
+		PhongShader.getInstance().bindShader();
+		PhongShader.setViewMatrix(this);
+	}
 
-		BasicShader.getInstance().bindShader();
-		BasicShader.setViewMatrix(this);
+	public void walkForward(float distance) {
+		velocity.x = distance * (float) Math.sin(Math.toRadians(rotation.y));
+		velocity.z = distance * (float) Math.cos(Math.toRadians(rotation.y));
+	}
+
+	public void walkBackwards(float distance) {
+		velocity.x = distance * (float) Math.sin(Math.toRadians(rotation.y- 180));
+		velocity.z = distance * (float) Math.cos(Math.toRadians(rotation.y- 180));
+	}
+
+	public void strafeLeft(float distance) {
+		velocity.x = distance * (float) Math.sin(Math.toRadians(rotation.y + 90));
+		velocity.z = distance * (float) Math.cos(Math.toRadians(rotation.y + 90));
+	}
+
+	public void strafeRight(float distance) {
+		velocity.x = distance * (float) Math.sin(Math.toRadians(rotation.y - 90));
+		velocity.z = distance * (float) Math.cos(Math.toRadians(rotation.y - 90));
 	}
 
 }
