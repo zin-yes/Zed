@@ -14,7 +14,7 @@ public class Player extends Camera {
 	}
 
 	@Override
-	public void updateCamera() {
+	public void updateCamera(Terrain terrain) {
 		if (Input.isKeyDown(GLFW.GLFW_KEY_F1))
 			Input.setMouseGrabbed(true);
 		if (Input.isKeyDown(GLFW.GLFW_KEY_F2))
@@ -25,18 +25,26 @@ public class Player extends Camera {
 			rotation.y += Input.getMouseDeltaX() * 0.1f;
 		}
 
+		if (position.y < terrain.getHeightAt(position.x, position.z) + 4) {
+			position.y = terrain.getHeightAt(position.x, position.z) + 4;
+			if (Input.isKeyDown(GLFW.GLFW_KEY_SPACE))
+				velocity.y = 2f;
+		} else {
+			velocity.y += -0.02f;
+		}
+		
+		position.y += velocity.y;
+		
 		if (Input.isKeyDown(GLFW.GLFW_KEY_W))
-			walkForward(0.2f);
+			walkForward(0.2f*6);
 		if (Input.isKeyDown(GLFW.GLFW_KEY_A))
-			strafeLeft(0.2f);
+			strafeRight(0.2f*6);
 		if (Input.isKeyDown(GLFW.GLFW_KEY_S))
-			walkBackwards(0.2f);
+			walkBackwards(0.2f*6);
 		if (Input.isKeyDown(GLFW.GLFW_KEY_D))
-			strafeRight(0.2f);
+			strafeLeft(0.2f*6);
 		if (Input.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT))
 			position.y -= 0.2f;
-		if (Input.isKeyDown(GLFW.GLFW_KEY_SPACE))
-			position.y += 0.2f;
 
 		if (rotation.x > 360)
 			rotation.x = 0;

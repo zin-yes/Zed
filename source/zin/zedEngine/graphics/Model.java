@@ -197,12 +197,12 @@ public class Model {
 		}
 	}
 
-	public Model(float[] vertices, float[] textureCoords) {
+	public Model(float[] vertices, float[] textureCoords, float[] normals, int[] indices) {
 		vaoID = GL30.glGenVertexArrays();
-		vertexCount = vertices.length / 3;
 		GL30.glBindVertexArray(vaoID);
-		int vertexVboID = GL15.glGenBuffers();
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vertexVboID);
+
+		int vertexID = GL15.glGenBuffers();
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vertexID);
 		FloatBuffer verticesBuffer = BufferUtils.createFloatBuffer(vertices.length);
 		verticesBuffer.put(vertices);
 		verticesBuffer.flip();
@@ -218,6 +218,29 @@ public class Model {
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, textureCoordsBuffer, GL15.GL_STATIC_DRAW);
 		GL20.glVertexAttribPointer(1, 2, GL11.GL_FLOAT, false, 0, 0);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+
+		int normalsID = GL15.glGenBuffers();
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, normalsID);
+		FloatBuffer normalsBuffer = BufferUtils.createFloatBuffer(normals.length);
+		normalsBuffer.put(normals);
+		normalsBuffer.flip();
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, normalsBuffer, GL15.GL_STATIC_DRAW);
+		GL20.glVertexAttribPointer(2, 3, GL11.GL_FLOAT, false, 0, 0);
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+
+		int indicesID = GL15.glGenBuffers();
+		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, indicesID);
+		IntBuffer indicesBuffer = BufferUtils.createIntBuffer(indices.length);
+		indicesBuffer.put(indices);
+		indicesBuffer.flip();
+		GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, indicesBuffer, GL15.GL_STATIC_DRAW);
+
+		vbos.add(vertexID);
+		vbos.add(textureCoordsID);
+		vbos.add(normalsID);
+		vbos.add(indicesID);
+
+		vertexCount = indices.length;
 	}
 
 	public Texture getTexture() {

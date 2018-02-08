@@ -2,30 +2,34 @@ package zin.zedEngine.graphics;
 
 import org.lwjgl.glfw.GLFW;
 
+import zin.game.player.Terrain;
 import zin.zedEngine.graphics.shaders.BasicShader;
 import zin.zedEngine.math.Matrix4f;
 import zin.zedEngine.math.Vector3f;
 
 public class Camera {
 
-	protected Vector3f position, rotation;
+	protected Vector3f position, rotation, velocity;
 
 	public Camera(Vector3f position, Vector3f rotation) {
 		this.position = position;
 		this.rotation = rotation;
+		this.velocity = new Vector3f();
 	}
 
 	public Camera(Camera source) {
 		position = source.getPosition();
 		rotation = source.getRotation();
+		velocity = new Vector3f();
 	}
 
 	public Camera() {
 		position = new Vector3f();
 		rotation = new Vector3f();
+		velocity = new Vector3f();
 	}
 
-	public void updateCamera() {
+	public void updateCamera(Terrain terrain) {
 		if (Input.isKeyDown(GLFW.GLFW_KEY_W))
 			walkForward(0.2f);
 		if (Input.isKeyDown(GLFW.GLFW_KEY_S))
@@ -76,12 +80,12 @@ public class Camera {
 		position.z -= distance * (float) Math.cos(Math.toRadians(rotation.y));
 	}
 
-	public void strafeRight(float distance) {
+	public void strafeLeft(float distance) {
 		position.x += distance * (float) Math.sin(Math.toRadians(rotation.y + 90));
 		position.z += distance * (float) Math.cos(Math.toRadians(rotation.y + 90));
 	}
 
-	public void strafeLeft(float distance) {
+	public void strafeRight(float distance) {
 		position.x += distance * (float) Math.sin(Math.toRadians(rotation.y - 90));
 		position.z += distance * (float) Math.cos(Math.toRadians(rotation.y - 90));
 	}

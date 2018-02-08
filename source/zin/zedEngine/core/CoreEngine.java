@@ -6,6 +6,7 @@ import static org.lwjgl.opengl.GL11.glClear;
 
 import java.util.ArrayList;
 
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
 import zin.zedEngine.graphics.Display;
@@ -94,6 +95,7 @@ public class CoreEngine {
 
 				if (frameCounter >= 1.0) {
 					System.out.println("FPS: " + frames + ", UPS: " + updates);
+					GLFW.glfwSetWindowTitle(Display.getIdentifier(), "Zed Engine (FPS: " + frames + ", UPS: " + updates + ")");
 					frameAvg.add(frames);
 					updates = 0;
 					frames = 0;
